@@ -15,29 +15,43 @@ import CustomTextInput from '../../components/CustomTextInput';
 import { ROUTES } from '../../utils';
 
 const PRIMARY = '#6A1B9A';
-const BACKGROUND = '#F3F0F7';
+const LIGHT_PURPLE = '#8E24AA';
+const BACKGROUND = '#F5F5FA';
 
-const Login = () => {
+const Register = () => {
+  const [fullName, setFullName] = useState('');
   const [emailAdd, setEmailAdd] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={PRIMARY} barStyle="light-content" />
 
+      {/* Logo */}
       <Image
         source={require('../../assets/secondary_logo.png')}
         style={styles.logo}
         resizeMode="contain"
       />
 
+      {/* Card Container */}
       <View style={styles.card}>
-        <Text style={styles.title}>Welcome Back</Text>
+        <Text style={styles.title}>Register</Text>
 
         <CustomTextInput
-          label="Email Address"
-          placeholder="Enter your email"
+          label={'Full Name'}
+          placeholder={'Enter your full name'}
+          value={val => setFullName(val)}
+          containerStyle={styles.inputContainer}
+          labelStyle={styles.label}
+          textStyle={styles.inputText}
+        />
+
+        <CustomTextInput
+          label={'Email Address'}
+          placeholder={'Enter your email'}
           value={val => setEmailAdd(val)}
           containerStyle={styles.inputContainer}
           labelStyle={styles.label}
@@ -45,32 +59,43 @@ const Login = () => {
         />
 
         <CustomTextInput
-          label="Password"
-          placeholder="Enter your password"
+          label={'Password'}
+          placeholder={'Enter your password'}
           value={val => setPassword(val)}
           containerStyle={styles.inputContainer}
           labelStyle={styles.label}
           textStyle={styles.inputText}
         />
 
+        <CustomTextInput
+          label={'Confirm Password'}
+          placeholder={'Confirm your password'}
+          value={val => setConfirmPassword(val)}
+          containerStyle={styles.inputContainer}
+          labelStyle={styles.label}
+          textStyle={styles.inputText}
+        />
+
         <CustomButton
-          label="LOGIN"
+          label={'REGISTER'}
           containerStyle={styles.button}
           textStyle={styles.buttonText}
           onPress={() => {
-            if (!emailAdd || !password) {
-              Alert.alert('Missing Fields', 'Please enter email and password.');
+            if (!fullName || !emailAdd || !password || !confirmPassword) {
+              Alert.alert('Missing Fields', 'Please fill in all fields.');
+              return;
+            }
+            if (password !== confirmPassword) {
+              Alert.alert('Password Mismatch', 'Passwords do not match.');
               return;
             }
           }}
         />
 
-        <View style={styles.registerContainer}>
-          <Text style={styles.registerText}>Not registered yet?</Text>
-          <TouchableOpacity
-            onPress={() => navigation.navigate(ROUTES.REGISTER)}
-          >
-            <Text style={styles.registerLink}> Register</Text>
+        <View style={styles.loginContainer}>
+          <Text style={styles.loginText}>Already have an account?</Text>
+          <TouchableOpacity onPress={() => navigation.navigate(ROUTES.LOGIN)}>
+            <Text style={styles.loginLink}> Login</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -78,52 +103,50 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: BACKGROUND,
-    alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 25,
+    alignItems: 'center',
+    paddingHorizontal: 20,
   },
 
   logo: {
-    width: 140,
+    width: 180,
     height: 120,
     marginBottom: 20,
   },
 
   card: {
     width: '100%',
-    backgroundColor: '#fff',
-    borderRadius: 25,
+    backgroundColor: '#ffffff',
     padding: 25,
-    elevation: 10,
+    borderRadius: 20,
+    elevation: 8,
     shadowColor: '#000',
-    shadowOpacity: 0.15,
-    shadowRadius: 15,
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
   },
 
   title: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: '800',
     color: PRIMARY,
+    marginBottom: 20,
     textAlign: 'center',
-    marginBottom: 25,
   },
 
   inputContainer: {
-    width: '100%',
-    marginBottom: 20,
+    marginBottom: 15,
   },
 
   label: {
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: '600',
     color: PRIMARY,
-    marginBottom: 5,
   },
 
   inputText: {
@@ -133,29 +156,29 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 10,
     backgroundColor: PRIMARY,
-    borderRadius: 35,
-    paddingVertical: 16,
+    borderRadius: 30,
+    paddingVertical: 15,
   },
 
   buttonText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: '700',
+    color: '#ffffff',
     textAlign: 'center',
+    fontWeight: '700',
+    fontSize: 18,
   },
 
-  registerContainer: {
+  loginContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: 20,
   },
 
-  registerText: {
+  loginText: {
     color: '#555',
   },
 
-  registerLink: {
-    color: PRIMARY,
+  loginLink: {
+    color: LIGHT_PURPLE,
     fontWeight: '700',
   },
 });

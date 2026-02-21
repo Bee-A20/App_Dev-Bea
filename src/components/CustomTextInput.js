@@ -1,5 +1,8 @@
-import { Text, View } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+import { useState } from 'react';
+import { Text, View, TextInput } from 'react-native';
+
+const PRIMARY = '#6A1B9A';
+const LIGHT_PURPLE = '#EFE7F5';
 
 const CustomTextInput = ({
   placeholder,
@@ -8,21 +11,48 @@ const CustomTextInput = ({
   value,
   containerStyle,
   textStyle,
+  secureTextEntry,
 }) => {
+  const [focused, setFocused] = useState(false);
+
   return (
-    <View style={containerStyle}>
-      <Text style={labelStyle}>{label}</Text>
-      <TextInput
-        placeholder={placeholder}
-        onChangeText={value}
+    <View style={[{ width: '100%' }, containerStyle]}>
+      <Text
         style={[
-          textStyle,
-          {
-            width: '80%',
-            borderBottomWidth: 1,
-          },
+          { marginBottom: 6, fontWeight: '600', color: PRIMARY },
+          labelStyle,
         ]}
-      />
+      >
+        {label}
+      </Text>
+
+      <View
+        style={{
+          backgroundColor: LIGHT_PURPLE,
+          borderRadius: 15,
+          paddingHorizontal: 15,
+          paddingVertical: 5,
+          borderWidth: 2,
+          borderColor: focused ? PRIMARY : 'transparent',
+        }}
+      >
+        <TextInput
+          placeholder={placeholder}
+          placeholderTextColor="#999"
+          onChangeText={value}
+          secureTextEntry={secureTextEntry}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+          style={[
+            {
+              color: '#222', // ✅ FIXED TEXT COLOR
+              fontSize: 16,
+              paddingVertical: 10,
+            },
+            textStyle,
+          ]}
+        />
+      </View>
     </View>
   );
 };

@@ -1,7 +1,8 @@
+import React from 'react';
 import { Image, Text, View } from 'react-native';
 import { IMG } from '../utils';
 
-const ProfileScreen = () => {
+const ProfileScreen: React.FC = () => {
   return (
     <View
       style={{

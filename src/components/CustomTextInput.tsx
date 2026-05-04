@@ -1,10 +1,27 @@
-import { useState } from 'react';
-import { Text, View, TextInput } from 'react-native';
+import React, { useState } from 'react';
+import {
+  Text,
+  View,
+  TextInput,
+  StyleProp,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
+
+interface CustomTextInputProps {
+  placeholder?: string;
+  label: string;
+  labelStyle?: StyleProp<TextStyle>;
+  value?: (val: string) => void;
+  containerStyle?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
+  secureTextEntry?: boolean;
+}
 
 const PRIMARY = '#6A1B9A';
 const LIGHT_PURPLE = '#EFE7F5';
 
-const CustomTextInput = ({
+const CustomTextInput: React.FC<CustomTextInputProps> = ({
   placeholder,
   label,
   labelStyle,
@@ -45,7 +62,7 @@ const CustomTextInput = ({
           onBlur={() => setFocused(false)}
           style={[
             {
-              color: '#222', // ✅ FIXED TEXT COLOR
+              color: '#222',
               fontSize: 16,
               paddingVertical: 10,
             },
